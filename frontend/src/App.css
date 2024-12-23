@@ -105,7 +105,8 @@ body {
   border-radius: 8px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  margin-top: 15px;
+  margin-top: 30px; /* Equal space above */
+  margin-bottom: 30px; /* Equal space below */
 }
 
 .team-name-input:focus {
@@ -117,13 +118,14 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 10px;
-  padding: 10px;
+  gap: 15px; /* Adds spacing between cards */
+  width: 100%;
+  margin-top: 30px; /* Equal space above */
 }
 
 .pokemon-card {
-  width: 150px;
-  height: 180px;
+  width: 190px; /* Larger cards */
+  height: 220px; /* Adjusted height */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,11 +150,22 @@ body {
   background: var(--card-header-bg);
   text-align: center;
   padding: 5px 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   color: var(--text-color);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
   border-bottom: 2px solid var(--card-border);
+}
+
+.sprite {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.sprite:hover {
+  transform: rotate(10deg) scale(1.1);
 }
 
 .no-team-text {
