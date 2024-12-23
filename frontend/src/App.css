@@ -116,16 +116,17 @@ body {
 
 .team-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Ensure even spacing */
   flex-wrap: nowrap;
-  gap: 15px; /* Adds spacing between cards */
+  gap: 10px;
   width: 100%;
   margin-top: 30px; /* Equal space above */
+  max-width: 1200px; /* Prevent stretching */
 }
 
 .pokemon-card {
-  width: 190px; /* Larger cards */
-  height: 220px; /* Adjusted height */
+  width: 220px; /* Increased width */
+  height: 260px; /* Increased height */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,8 +159,8 @@ body {
 }
 
 .sprite {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin-bottom: 10px;
   transition: transform 0.3s ease;
 }
