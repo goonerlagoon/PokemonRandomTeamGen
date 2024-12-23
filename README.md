@@ -2,6 +2,8 @@
 
 A retro-themed web application to generate Pokémon teams based on selected or random types. Users can save their teams with custom names to a database and view the saved list. 
 
+Here's a live version of it: https://pokemon-random-team-gen.vercel.app/
+
 ---
 
 ## Features
