@@ -9,7 +9,12 @@ const PORT = 4000;
 const POKEDEX_URL = "https://play.pokemonshowdown.com/data/pokedex.json";
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://pokemon-random-team-gen.vercel.app/", // Replace with your actual frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Cache for Pokémon data
