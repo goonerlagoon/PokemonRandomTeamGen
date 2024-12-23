@@ -11,7 +11,7 @@ const POKEDEX_URL = "https://play.pokemonshowdown.com/data/pokedex.json";
 // Middleware
 app.use(
   cors({
-    origin: "https://pokemon-random-team-gen.vercel.app", // Replace with your actual frontend URL
+    origin: "https://pokemon-random-team-gen.vercel.app",
     credentials: true,
   })
 );
