@@ -1,38 +1,167 @@
-.App {
-  text-align: center;
+:root {
+  --bg-color: #1E1E2F;
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.3);
+  --button-pink: #FF6B6B;
+  --button-blue: #5A87FA;
+  --text-color: #FFFFFF;
+  --disabled-color: #555;
+  --glass-blur: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app {
+  padding: 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background: linear-gradient(45deg, var(--button-pink), var(--button-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.selector-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dropdown-container {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.dropdown {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: 5px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  backdrop-filter: blur(var(--glass-blur));
+  cursor: pointer;
+  transition: border-color 0.3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdown:hover {
+  border-color: var(--button-blue);
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.pink-button,
+.blue-button {
+  padding: 12px 24px;
+  margin: 5px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pink-button {
+  background-color: var(--button-pink);
+  color: var(--text-color);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+}
+
+.blue-button {
+  background-color: var(--button-blue);
+  color: var(--text-color);
+  box-shadow: 0 4px 15px rgba(90, 135, 250, 0.5);
+}
+
+.disabled-button {
+  background-color: var(--disabled-color);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.error {
+  color: var(--button-pink);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.team-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+}
+
+.pokemon-card {
+  width: 160px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(var(--glass-blur));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-content {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.pokemon-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.pokemon-types {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #ddd;
+}
+
+.sprite {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  padding: 5px;
+}
+
+.no-team-text {
+  text-align: center;
+  color: #a9a9a9;
 }

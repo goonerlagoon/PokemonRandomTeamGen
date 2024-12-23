@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./App.css";
 
 const availableTypes = [
   "Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison",
   "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark",
   "Steel", "Fairy",
 ];
-
-// Helper function to generate sprite URL
-const getSpriteUrl = (pokemonName) =>
-  `https://play.pokemonshowdown.com/sprites/ani/${pokemonName
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")}.gif`;
 
 function App() {
   const [selectedTypes, setSelectedTypes] = useState(Array(6).fill(""));
@@ -47,23 +42,17 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", color: "#333" }}>Random Pokémon Team Generator</h1>
+    <div className="app">
+      <h1 className="header">Random Pokémon Team Generator</h1>
 
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <div style={{ marginBottom: "20px" }}>
+      <div className="selector-container">
+        <div className="dropdown-container">
           {selectedTypes.map((type, index) => (
             <select
               key={index}
               value={type}
               onChange={(e) => handleTypeChange(index, e.target.value)}
-              style={{
-                padding: "10px",
-                margin: "5px",
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                backgroundColor: "#f9f9f9",
-              }}
+              className="dropdown"
             >
               <option value="">Choose...</option>
               {availableTypes.map((typeOption) => (
@@ -75,83 +64,46 @@ function App() {
           ))}
         </div>
 
-        <button
-          onClick={generateRandomTypes}
-          style={{
-            padding: "10px 20px",
-            marginRight: "10px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          I'm Feeling Lucky
-        </button>
-
-        <button
-          onClick={fetchTeam}
-          disabled={loading || selectedTypes.some((type) => type === "")}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: loading || selectedTypes.some((type) => type === "") ? "#ccc" : "#28a745",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: loading || selectedTypes.some((type) => type === "") ? "not-allowed" : "pointer",
-          }}
-        >
-          {loading ? "Generating Team..." : "Generate Team"}
-        </button>
+        <div className="button-container">
+          <button onClick={generateRandomTypes} className="pink-button">
+            I'm Feeling Lucky
+          </button>
+          <button
+            onClick={fetchTeam}
+            disabled={loading || selectedTypes.some((type) => type === "")}
+            className={`blue-button ${
+              loading || selectedTypes.some((type) => type === "")
+                ? "disabled-button"
+                : ""
+            }`}
+          >
+            {loading ? "Generating Team..." : "Generate Team"}
+          </button>
+        </div>
       </div>
 
-      {error && (
-        <div style={{ color: "red", textAlign: "center", marginBottom: "20px" }}>
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
 
       {team.length > 0 ? (
-        <div style={{ textAlign: "center" }}>
-          <h2 style={{ color: "#007bff" }}>Your Random Pokémon Team</h2>
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {team.map((pokemon, index) => (
-              <li
-                key={index}
-                style={{
-                  margin: "10px 0",
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  borderRadius: "5px",
-                  backgroundColor: "#f9f9f9",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <strong>{pokemon.name}</strong>
-                  {pokemon.types && (
-                    <p>
-                      Types:{" "}
-                      <span style={{ color: "#6c757d" }}>
-                        {pokemon.types.join(", ")}
-                      </span>
-                    </p>
-                  )}
-                </div>
+        <div className="team-container">
+          {team.map((pokemon, index) => (
+            <div key={index} className="pokemon-card">
+              <div className="card-content">
                 <img
-                  src={getSpriteUrl(pokemon.name)}
+                  src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.name.toLowerCase()}.gif`}
                   alt={pokemon.name}
-                  style={{ height: "80px", marginLeft: "20px" }}
+                  className="sprite"
                 />
-              </li>
-            ))}
-          </ul>
+                <p className="pokemon-name">{pokemon.name}</p>
+                {pokemon.types && (
+                  <p className="pokemon-types">{pokemon.types.join(", ")}</p>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
-        !loading && <p style={{ textAlign: "center" }}>No team generated yet.</p>
+        !loading && <p className="no-team-text">No team generated yet.</p>
       )}
     </div>
   );
