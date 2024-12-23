@@ -65,17 +65,13 @@ function App() {
         </div>
 
         <div className="button-container">
-          <button onClick={generateRandomTypes} className="pink-button">
+          <button className="pink-button" onClick={generateRandomTypes}>
             I'm Feeling Lucky
           </button>
           <button
+            className="pink-button"
             onClick={fetchTeam}
             disabled={loading || selectedTypes.some((type) => type === "")}
-            className={`blue-button ${
-              loading || selectedTypes.some((type) => type === "")
-                ? "disabled-button"
-                : ""
-            }`}
           >
             {loading ? "Generating Team..." : "Generate Team"}
           </button>
@@ -84,26 +80,30 @@ function App() {
 
       {error && <div className="error">{error}</div>}
 
-      {team.length > 0 ? (
+      {team.length > 0 && (
         <div className="team-container">
           {team.map((pokemon, index) => (
             <div key={index} className="pokemon-card">
+              <div className="card-header">{pokemon.name}</div>
+              <img
+                className="sprite"
+                src={`https://play.pokemonshowdown.com/sprites/gen5/${pokemon.name
+                  .toLowerCase()
+                  .replace(" ", "-")}.png`}
+                alt={pokemon.name}
+              />
               <div className="card-content">
-                <img
-                  src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.name.toLowerCase()}.gif`}
-                  alt={pokemon.name}
-                  className="sprite"
-                />
-                <p className="pokemon-name">{pokemon.name}</p>
-                {pokemon.types && (
-                  <p className="pokemon-types">{pokemon.types.join(", ")}</p>
-                )}
+                <p className="pokemon-types">
+                  {pokemon.types ? pokemon.types.join(", ") : "Unknown"}
+                </p>
               </div>
             </div>
           ))}
         </div>
-      ) : (
-        !loading && <p className="no-team-text">No team generated yet.</p>
+      )}
+
+      {team.length === 0 && !loading && (
+        <p className="no-team-text">No team generated yet.</p>
       )}
     </div>
   );

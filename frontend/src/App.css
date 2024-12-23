@@ -1,18 +1,19 @@
 :root {
-  --bg-color: #1E1E2F;
-  --card-bg: rgba(255, 255, 255, 0.1);
-  --card-border: rgba(255, 255, 255, 0.3);
-  --button-pink: #FF6B6B;
-  --button-blue: #5A87FA;
-  --text-color: #FFFFFF;
-  --disabled-color: #555;
-  --glass-blur: 10px;
+  --bg-color: #000000; /* Deep black background */
+  --card-bg: #0B192C; /* Dark navy for cards */
+  --card-border: #1E3E62; /* Deep blue-gray for card borders */
+  --card-header-bg: #1E3E62; /* Header contrast color */
+  --button-pink-start: #C0392B; /* Dark pink gradient start */
+  --button-pink-end: #8E0E00; /* Dark pink gradient end */
+  --text-color: #FFFFFF; /* White text for dark theme */
+  --disabled-color: #555555; /* Muted gray for disabled elements */
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Softer shadow */
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Fredoka One", sans-serif; /* Professional and playful font */
   background-color: var(--bg-color);
   color: var(--text-color);
 }
@@ -28,12 +29,11 @@ body {
 .header {
   text-align: center;
   margin-bottom: 30px;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
-  letter-spacing: 1px;
-  background: linear-gradient(45deg, var(--button-pink), var(--button-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-color);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .selector-container {
@@ -45,123 +45,139 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
 }
 
 .dropdown {
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  border: 1px solid var(--card-border);
+  border: 2px solid var(--card-border);
   border-radius: 5px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  backdrop-filter: blur(var(--glass-blur));
   cursor: pointer;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, transform 0.2s;
 }
 
 .dropdown:hover {
-  border-color: var(--button-blue);
+  border-color: var(--button-pink-start);
+  transform: scale(1.05);
 }
 
 .button-container {
   margin-top: 20px;
 }
 
-.pink-button,
-.blue-button {
-  padding: 12px 24px;
+.pink-button {
+  padding: 14px 28px;
   margin: 5px;
-  border: none;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
+  border: 2px solid var(--card-border);
+  border-radius: 4px;
+  font-size: 1.2rem;
   text-transform: uppercase;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  color: var(--text-color);
+  background: linear-gradient(145deg, var(--button-pink-start), var(--button-pink-end));
+  box-shadow: 6px 6px 0 var(--card-border), -4px -4px 8px rgba(255, 255, 255, 0.1);
+  text-shadow: 1px 1px 1px rgba(70, 83, 224, 0.8);
 }
 
-.pink-button {
-  background-color: var(--button-pink);
-  color: var(--text-color);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+.pink-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 0 var(--card-border), -6px -6px 12px rgba(255, 255, 255, 0.2);
 }
 
-.blue-button {
-  background-color: var(--button-blue);
-  color: var(--text-color);
-  box-shadow: 0 4px 15px rgba(90, 135, 250, 0.5);
+.pink-button:active {
+  transform: translateY(2px);
+  box-shadow: 3px 3px 0 var(--card-border), -2px -2px 4px rgba(255, 255, 255, 0.1);
 }
 
 .disabled-button {
   background-color: var(--disabled-color);
   cursor: not-allowed;
   box-shadow: none;
+  border: 2px solid var(--card-border);
 }
 
 .error {
-  color: var(--button-pink);
+  color: #FF4081; /* Error color */
   text-align: center;
   margin-bottom: 20px;
 }
 
 .team-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
   padding: 10px;
 }
 
 .pokemon-card {
-  width: 160px;
-  height: 200px;
+  width: 200px; /* Adjusted width for 6-in-a-row */
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 15px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(var(--glass-blur));
+  border: 3px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8), -4px -4px 8px rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
   cursor: pointer;
 }
 
 .pokemon-card:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px) rotate(-2deg);
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.8), -8px -8px 12px rgba(255, 255, 255, 0.2);
+}
+
+.card-header {
+  width: 100%;
+  background: var(--card-header-bg);
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--card-border);
 }
 
 .card-content {
   text-align: center;
+  padding: 10px;
   color: var(--text-color);
 }
 
 .pokemon-name {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .pokemon-types {
   font-size: 0.9rem;
   font-style: italic;
-  color: #ddd;
+  color: #c0c0c0;
 }
 
 .sprite {
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-  padding: 5px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.sprite:hover {
+  transform: rotate(10deg) scale(1.1);
 }
 
 .no-team-text {
   text-align: center;
-  color: #a9a9a9;
+  color: #888888;
 }
