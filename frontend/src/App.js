@@ -9,7 +9,7 @@ const availableTypes = [
 ];
 
 // Set your backend base URL
-const BASE_URL = "https://pokemon-random-team-gen.vercel.app";
+const BASE_URL = "https://pokemonrandomteamgen.onrender.com";
 
 function App() {
   const [selectedTypes, setSelectedTypes] = useState(Array(6).fill(""));
