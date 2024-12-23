@@ -13,6 +13,8 @@ function App() {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [teamName, setTeamName] = useState("");
+  const [savedTeams, setSavedTeams] = useState([]);
 
   const handleTypeChange = (index, value) => {
     const updatedTypes = [...selectedTypes];
@@ -32,13 +34,28 @@ function App() {
       const response = await axios.get("http://localhost:4000/random-team", {
         params: { types: selectedTypes.join(",") },
       });
-      setTeam(response.data.team);
+      const orderedTeam = selectedTypes.map((type, idx) => {
+        const pokemon = response.data.team[idx];
+        return pokemon ? pokemon : { name: "Unknown", types: ["N/A"] };
+      });
+      setTeam(orderedTeam);
     } catch (err) {
       console.error("Error fetching team:", err.message);
       setError("Failed to fetch a random team. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const saveTeam = () => {
+    if (!teamName.trim()) {
+      alert("Please enter a team name before saving.");
+      return;
+    }
+    const newTeam = { name: teamName, team: [...team] };
+    setSavedTeams((prev) => [...prev, newTeam]);
+    setTeamName("");
+    alert("Team saved successfully!");
   };
 
   return (
@@ -75,7 +92,22 @@ function App() {
           >
             {loading ? "Generating Team..." : "Generate Team"}
           </button>
+          <button
+            className="pink-button"
+            onClick={saveTeam}
+            disabled={team.length === 0}
+          >
+            Save Team
+          </button>
         </div>
+
+        <input
+          type="text"
+          placeholder="Enter team name"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          className="team-name-input"
+        />
       </div>
 
       {error && <div className="error">{error}</div>}
@@ -104,6 +136,20 @@ function App() {
 
       {team.length === 0 && !loading && (
         <p className="no-team-text">No team generated yet.</p>
+      )}
+
+      {savedTeams.length > 0 && (
+        <div className="saved-teams">
+          <h3>Saved Teams</h3>
+          <ul>
+            {savedTeams.map((savedTeam, index) => (
+              <li key={index}>
+                <strong>{savedTeam.name}</strong>:{" "}
+                {savedTeam.team.map((pokemon) => pokemon.name).join(", ")}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
