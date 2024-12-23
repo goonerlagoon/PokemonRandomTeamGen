@@ -1,59 +1,55 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
+const axios = require("axios");
 
 const app = express();
 const PORT = 4000;
 
-// Load pokedex data
-const pokedexPath = path.join(__dirname, "data", "pokedex.json");
-if (!fs.existsSync(pokedexPath)) {
-  console.error("pokedex.json file not found in the data directory.");
-  process.exit(1);
-}
-
-const pokedex = JSON.parse(fs.readFileSync(pokedexPath, "utf-8"));
-
-// Group Pokémon by type
-let typeGroups = {};
-
-const groupPokemonByType = () => {
-  const groups = {};
-
-  Object.values(pokedex).forEach((pokemon) => {
-    if (pokemon.types && Array.isArray(pokemon.types)) {
-      pokemon.types.forEach((type) => {
-        if (!groups[type]) {
-          groups[type] = [];
-        }
-        groups[type].push({
-          num: pokemon.num,
-          name: pokemon.name,
-          types: pokemon.types,
-        });
-      });
-    }
-  });
-
-  return groups;
-};
-
-// Initialize type groups
-try {
-  typeGroups = groupPokemonByType();
-  console.log("Available Pokémon types:", Object.keys(typeGroups));
-} catch (error) {
-  console.error("Error grouping Pokémon by type:", error.message);
-  process.exit(1);
-}
+// URL of the hosted pokedex.json file on GitHub
+const POKEDEX_URL = "https://play.pokemonshowdown.com/data/pokedex.json";
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// Cache for Pokémon data
+let pokedexCache = null;
+
+// Fetch the Pokémon data dynamically
+const fetchPokedexData = async () => {
+  if (!pokedexCache) {
+    try {
+      const response = await axios.get(POKEDEX_URL);
+      pokedexCache = response.data;
+      console.log("Pokedex data fetched successfully.");
+    } catch (error) {
+      console.error("Error fetching Pokedex data:", error.message);
+      throw new Error("Failed to fetch Pokedex data.");
+    }
+  }
+  return pokedexCache;
+};
+
+// Helper Function to Group Pokémon by Type
+const groupPokemonByType = (pokedex) => {
+  const typeGroups = {};
+
+  Object.values(pokedex).forEach((pokemon) => {
+    if (pokemon.types && Array.isArray(pokemon.types)) {
+      pokemon.types.forEach((type) => {
+        if (!typeGroups[type]) {
+          typeGroups[type] = [];
+        }
+        typeGroups[type].push(pokemon);
+      });
+    }
+  });
+
+  return typeGroups;
+};
+
 // Generate a Random Pokémon Team Based on User-Selected Types
-const generateTeamBasedOnTypes = (types) => {
+const generateTeamBasedOnTypes = (types, typeGroups) => {
   const team = [];
 
   for (const type of types) {
@@ -72,8 +68,8 @@ const generateTeamBasedOnTypes = (types) => {
   return team;
 };
 
-// API Endpoints
-app.get("/random-team", (req, res) => {
+// API Endpoint for Random Team
+app.get("/random-team", async (req, res) => {
   const types = req.query.types ? req.query.types.split(",") : [];
   if (types.length !== 6) {
     return res
@@ -82,7 +78,9 @@ app.get("/random-team", (req, res) => {
   }
 
   try {
-    const team = generateTeamBasedOnTypes(types);
+    const pokedex = await fetchPokedexData();
+    const typeGroups = groupPokemonByType(pokedex);
+    const team = generateTeamBasedOnTypes(types, typeGroups);
     res.json({ team });
   } catch (error) {
     console.error("Error generating random team:", error.message);
