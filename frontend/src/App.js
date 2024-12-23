@@ -8,6 +8,9 @@ const availableTypes = [
   "Steel", "Fairy",
 ];
 
+// Set your backend base URL
+const BASE_URL = "https://pokemon-random-team-gen.vercel.app";
+
 function App() {
   const [selectedTypes, setSelectedTypes] = useState(Array(6).fill(""));
   const [team, setTeam] = useState([]);
@@ -31,7 +34,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get("http://localhost:4000/random-team", {
+      const response = await axios.get(`${BASE_URL}/random-team`, {
         params: { types: selectedTypes.join(",") },
       });
       const orderedTeam = selectedTypes.map((type, idx) => {
